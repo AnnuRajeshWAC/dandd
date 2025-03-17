@@ -5,13 +5,15 @@ import { CSS } from "@dnd-kit/utilities";
 import DeleteModal from "./DeleteModal";
 import { useDragDrop } from "../customHooks/usedragDrop";
 import EditModal from "./EditModal";
-const CardCol = ({ id, title, description,handleDelete }) => {
+const CardCol = ({item,handleDelete,handleEdit }) => {
+  if (!item) return console.log("hello");
+  ;
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: id.toString(), data: { title, description } });
+    useSortable({ id: item?.id.toString(), data: { title:item?.title, description:item?.description } });
   return (
     <Card
       ref={setNodeRef}
-      {...listeners}
+      
       {...attributes}
       style={{
         width: "18rem",
@@ -24,21 +26,24 @@ const CardCol = ({ id, title, description,handleDelete }) => {
         transition: transition,
       }}
     >
-      <Card.Body>
+      <Card.Body {...listeners}>
         <Card.Title>
           <div className="d-flex gap-5 justify-content-between">
-          <p>{title}</p>
+          <p>{item.title}</p>
           {/* <Button variant="danger">delete</Button> */}
-          <div className="d-flex gap-2">
-          <EditModal/>
-          <DeleteModal id={id} handleDelete={handleDelete}/>
-          </div>
+         
           </div>
         </Card.Title>
         <div className="d-flex">
-          {description ? <p>{description}</p> : null}
+          {item.description ? <p>{item.description}</p> : null}
         </div>
       </Card.Body>
+      <Card.Footer>
+      <div className="d-flex gap-2" >
+          <EditModal handleEdit={handleEdit} item={item}/>
+          <DeleteModal id={item.id} handleDelete={handleDelete}/>
+          </div>
+      </Card.Footer>
     </Card>
     
   );

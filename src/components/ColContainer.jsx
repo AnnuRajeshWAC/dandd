@@ -4,15 +4,15 @@ import React from "react";
 import { Col } from "react-bootstrap";
 import CardCol from "./Card";
 
-const ColContainer = ({ column,handleDelete }) => {
+const ColContainer = ({ column,handleDelete,handleEdit }) => {
   const { setNodeRef } = useDroppable({
     id: column.name,
   });
-
+const items=column?.templates?.map((item) => item.id.toString())
   return (
     <SortableContext
       id={column.name}
-      items={column.templates.map((item) => item.id.toString())}
+      items={items}
       strategy={rectSortingStrategy}
     >
       <Col
@@ -31,7 +31,7 @@ const ColContainer = ({ column,handleDelete }) => {
           <h3>{column.name}</h3>
 
           {column.templates?.map((item) => (
-            <CardCol key={item.id} title={item.title} description={item.description} id={item.id} handleDelete={handleDelete} />
+            <CardCol key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit}/>
           ))}
         </div>
       </Col>

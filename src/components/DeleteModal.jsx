@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useDragDrop } from '../customHooks/usedragDrop';
+import { useDeleteDate } from '../customHooks/useDeleteData';
 
 function DeleteModal({id,handleDelete}) {
-  const [open,setOpen]=useState(false)
-  const handleOpen=()=>setOpen(true)
-  const handleClose=()=>setOpen(false)
+ const {open,handleOpen,handleClose,submitClose}=useDeleteDate(handleDelete)
   return (
     <>
     <Button variant="primary" type='button' onClick={(e)=>{e.stopPropagation()
@@ -26,8 +23,7 @@ function DeleteModal({id,handleDelete}) {
         No
         </Button>
         <Button variant="primary" onClick={()=>{
-          handleDelete(id)
-          handleClose()
+         submitClose(id)
         }}>
           Yes
         </Button>

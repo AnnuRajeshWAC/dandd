@@ -8,7 +8,7 @@ import {
 } from "@dnd-kit/sortable";
 import ColContainer from "./ColContainer";
 
-const Column = ({ columns,handleDelete }) => {
+const Column = ({ columns,handleDelete,handleEdit }) => {
   
 
 
@@ -25,7 +25,7 @@ const Column = ({ columns,handleDelete }) => {
         >
           <Row className="gap-3" style={{ height: "100%" }}>
             {columns?.map((column) => (
-              <ColContainer column={column} key={column.name} handleDelete={handleDelete}/>
+              <ColContainer column={column} key={column.name} handleDelete={handleDelete} handleEdit={handleEdit}/>
             ))}
           </Row>
         </SortableContext>

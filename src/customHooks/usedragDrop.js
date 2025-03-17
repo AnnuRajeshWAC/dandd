@@ -38,7 +38,7 @@ export const useDragDrop = () => {
     });
   };
   const handleDragEnd = (event) => {
-    const { active, over, } = event;
+    const { active, over } = event;
     // if (active.id === over.id) return;
     if (
       active.data.current?.sortable.containerId !=
@@ -115,16 +115,36 @@ export const useDragDrop = () => {
       desc: active.data.current.description,
     });
   };
-  const handleDelete=(id)=>{
-   setColumns((prev)=>{
-    const updatedColumns= prev.map((i)=>{
-      return {...i,templates:i.templates.filter((item)=>item.id!==id)}
-    })
-localStorage.setItem('column',JSON.stringify(updatedColumns))
-return updatedColumns
-  
-   })
-  }
+  const handleDelete = (id) => {
+    setColumns((prev) => {
+      const updatedColumns = prev.map((i) => {
+        return {
+          ...i,
+          templates: i.templates.filter((item) => item.id !== id),
+        };
+      });
+      localStorage.setItem("column", JSON.stringify(updatedColumns));
+      return updatedColumns;
+    });
+  };
+  const handleEdit = (item, id) => {
+    console.log(id);
+    if (!item) return null;
+    console.log(item);
+
+    const title = item.title;
+    const description = item.description;
+    setColumns((prev) => {
+      const updatedColumns = prev.map((i) => {
+        const updatedTemplates = i.templates.map((r) =>
+          r.id === id ? { ...r, title: title, description: description } : r
+        );
+        return { ...i, templates: updatedTemplates };
+      });
+      localStorage.setItem("column", JSON.stringify(updatedColumns));
+      return updatedColumns;
+    });
+  };
   return {
     columns,
     handleDragEnd,
@@ -133,6 +153,7 @@ return updatedColumns
     sensors,
     handleDragOver,
     activeId,
-    handleDelete
+    handleDelete,
+    handleEdit,
   };
 };

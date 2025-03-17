@@ -21,13 +21,15 @@ function App() {
     handleDragOver,
     sensors,
     activeId,
-    handleDelete
+    handleDelete,
+    handleEdit
   } = useDragDrop();
   const overlayStyles = {
     boxShadow: "0 0 15px rgba(0, 0, 0, 0.2)",
     zIndex: 1000,
     opacity: 0.7,
   };
+  //comment
   return (
     <>
       <div
@@ -42,7 +44,7 @@ function App() {
           onDragOver={handleDragOver}
           onDragStart={handleDragStart}
         >
-          <Column columns={columns} handleDelete={handleDelete}/>
+          <Column columns={columns} handleDelete={handleDelete} handleEdit={handleEdit}/>
           <DragOverlay style={overlayStyles}>
             {activeId ? (
               <CardCol id={activeId.id} title={activeId.title} description={activeId.desc} handleDelete={handleDelete}/>
